@@ -4,8 +4,8 @@ import "../css/index.css";
 import { connect } from 'react-redux';
 import FlatList from 'flatlist-react';
 
-import { fetchNewsFeed, setUpVoteCount } from '../actions';
-import { NEWS_STORAGE_KEY } from '../actions/constants';
+import { fetchNewsFeed, setUpVoteCount, hideNewsFeed } from '../actions';
+import { NEWS_STORAGE_KEY, NEWS_FEED_SHOW } from '../actions/constants';
 
 import up_arrow from '../icons/up_arrow.png';
 
@@ -51,7 +51,8 @@ class HomeComponent extends React.Component {
                 "time": posted_time,
                 "url": url,
                 "vote_count": new_vote_count,
-                "comments": comments
+                "comments": comments,
+                "hide": NEWS_FEED_SHOW
             }
             localStorage.setItem(NEWS_STORAGE_KEY + id, JSON.stringify(news_results));
             this.props.setUpVoteCount(news_results)
@@ -68,7 +69,7 @@ class HomeComponent extends React.Component {
         } else {
             var storage_item = localStorage.getItem(NEWS_STORAGE_KEY + id);
             var parse_storage_item = JSON.parse(storage_item);
-            var vote_count = parse_storage_item.vote_count;
+            var vote_count = parse_storage_item != null ? parse_storage_item.vote_count : 0;
             votes = vote_count;
         }
         return (
@@ -77,10 +78,11 @@ class HomeComponent extends React.Component {
     }
 
     hideNewsFeed = (item) => {
-
+        this.props.hideNewsFeed(this.props.news, item.id);                  
     }
 
     renderItem = (item, index) => {
+       
         return (
             <table width="100%" height="30" border="0" bgcolor={index % 2 == 0 ? '#FFFFFF' : '#F2F2F2'}>
                 <tr>
@@ -106,7 +108,7 @@ class HomeComponent extends React.Component {
 
     render() {
         var results = JSON.parse(JSON.stringify(this.props.news)).news;
-        console.log(" News Feeds ---- "+JSON.stringify(this.props.news));
+        console.log(" News Feeds ---- " + JSON.stringify(this.props.news));
         return (
             <div className={'parent-div-container'}>
                 <div></div>
@@ -130,7 +132,7 @@ class HomeComponent extends React.Component {
                                 showsVerticalScrollIndicator={false}
                                 showsHorizontalScrollIndicator={false}
                             />
-                        : null}
+                            : null}
                     </div>
                 </div>
                 <div></div>
@@ -146,7 +148,8 @@ const stateProps = state => ({
 
 const dispatchProps = dispatch => ({
     fetchNewsFeed: counter => dispatch(fetchNewsFeed(counter)),
-    setUpVoteCount: item => dispatch(setUpVoteCount(item))
+    setUpVoteCount: item => dispatch(setUpVoteCount(item)),
+    hideNewsFeed: (feeds, id) => dispatch(hideNewsFeed(feeds, id))
 });
 
 export default connect(stateProps, dispatchProps)(HomeComponent);

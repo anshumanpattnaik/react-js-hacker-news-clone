@@ -3,7 +3,9 @@ import {
     ITMES,
     FETCH_NEWS_FEED,
     SET_UPVOTE_COUNT,
-    NEWS_STORAGE_KEY
+    NEWS_STORAGE_KEY,
+    NEWS_FEED_SHOW,
+    NEWS_FEED_HIDE
 } from './constants';
 
 import 'regenerator-runtime/runtime';
@@ -14,7 +16,7 @@ export const dispatchNewsFeeds = data => ({
 });
 
 export const fetchNewsFeed = counter => async (dispatch) => {
-    
+
     var feeds = [];
     for (var i = 1; i < 31; i++) {
         await fetch(BASE_URL + ITMES + parseInt(i))
@@ -32,29 +34,29 @@ export const fetchNewsFeed = counter => async (dispatch) => {
                     var commentCount = results.children.length;
 
                     var date = new Date(timeStamp * 1000);
-                    var posted_time = date.getMonth()+"/"+date.getDay()+"/"+date.getFullYear();
+                    var posted_time = date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear();
 
                     var storage_item = localStorage.getItem(NEWS_STORAGE_KEY + id);
                     var parse_storage_item = JSON.parse(storage_item);
-                    var vote_storage_count = parse_storage_item.vote_count;
 
-                    console.log("Get Storage Vote Count --> "+id+" == "+vote_count+" ::: "+vote_storage_count)
-
-                    var news_results = {
-                        "id": id,
-                        "title": title,
-                        "author": author,
-                        "time": posted_time,
-                        "url": url,
-                        "vote_count": vote_storage_count > vote_count? vote_storage_count: vote_count,
-                        "comments": commentCount
+                    var vote_storage_count = parse_storage_item != null ? parse_storage_item.vote_count : 0;                    
+                    var show_hide_status = (parse_storage_item !=null && parse_storage_item.hide && parse_storage_item.hide === NEWS_FEED_HIDE)? NEWS_FEED_HIDE: NEWS_FEED_SHOW
+                    
+                    if(show_hide_status === NEWS_FEED_SHOW){
+                        var news_results = {
+                            "id": id,
+                            "title": title,
+                            "author": author,
+                            "time": posted_time,
+                            "url": url,
+                            "vote_count": vote_storage_count > vote_count ? vote_storage_count : vote_count,
+                            "comments": commentCount,
+                            "hide": show_hide_status
+                        }
+                        feeds.push(news_results)
+                        localStorage.setItem(NEWS_STORAGE_KEY + id, JSON.stringify(news_results));
+                        dispatch(dispatchNewsFeeds(feeds));
                     }
-
-                    feeds.push(news_results)
-
-                    localStorage.setItem(NEWS_STORAGE_KEY+id, JSON.stringify(news_results));
-        
-                    dispatch(dispatchNewsFeeds(feeds));
 
                 }
             }).catch(error => {
@@ -69,7 +71,29 @@ export const dispatchVoteCount = count => ({
 });
 
 export const setUpVoteCount = vote => dispatch => {
-    
+
     console.log("Vote : setUpVoteCount Redux = " + JSON.stringify(vote));
     dispatch(dispatchVoteCount(vote));
+}
+
+export const hideNewsFeed = (feeds, id) => dispatch => {
+
+    var news = JSON.parse(JSON.stringify(feeds)).news
+    let index = news.findIndex(el => el.id === id);
+    var item = news[index];
+    news.splice(index, 1);
+
+    var hide_results = {
+        "id": item.id,
+        "title": item.title,
+        "author": item.author,
+        "time": item.posted_time,
+        "url": item.url,
+        "vote_count": item.vote_count,
+        "comments": item.comments,
+        "hide": NEWS_FEED_HIDE
+    }
+
+    localStorage.setItem(NEWS_STORAGE_KEY + id, hide_results)
+    dispatch(dispatchNewsFeeds(news));
 }
