@@ -9,6 +9,9 @@ import { NEWS_STORAGE_KEY, NEWS_FEED_SHOW } from '../actions/constants';
 
 import up_arrow from '../icons/up_arrow.png';
 
+import { LineChart } from 'react-chartkick';
+import 'chart.js'
+
 class HomeComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -78,11 +81,10 @@ class HomeComponent extends React.Component {
     }
 
     hideNewsFeed = (item) => {
-        this.props.hideNewsFeed(this.props.news, item.id);                  
+        this.props.hideNewsFeed(this.props.news, item.id);
     }
 
     renderItem = (item, index) => {
-       
         return (
             <table width="100%" height="30" border="0" bgcolor={index % 2 == 0 ? '#FFFFFF' : '#F2F2F2'}>
                 <tr>
@@ -106,9 +108,35 @@ class HomeComponent extends React.Component {
         )
     }
 
+    renderLineChart = results => {
+        var statistics = [];
+
+        for (var i = 0; i < results.length; i++) {
+            var id = results[i].id.toString();
+            var votes = results[i].vote_count;
+            console.log(id + " == " + votes);
+
+            var item = { [id]: votes }
+            statistics.push(item);
+        }
+        var graph_item = JSON.stringify(statistics);
+        graph_item = graph_item.replace(/[{}]/g, "");
+        graph_item = graph_item.replace('[','{');
+        graph_item = graph_item.replace(']','}');
+
+        var data = JSON.parse(graph_item);
+
+        return (
+            <LineChart
+                data={data}
+            />
+        )
+    }
+
     render() {
         var results = JSON.parse(JSON.stringify(this.props.news)).news;
         console.log(" News Feeds ---- " + JSON.stringify(this.props.news));
+        
         return (
             <div className={'parent-div-container'}>
                 <div></div>
@@ -134,6 +162,7 @@ class HomeComponent extends React.Component {
                             />
                             : null}
                     </div>
+                    {this.renderLineChart(results)}
                 </div>
                 <div></div>
             </div>
