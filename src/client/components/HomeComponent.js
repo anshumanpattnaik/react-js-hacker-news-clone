@@ -167,7 +167,17 @@ class HomeComponent extends React.Component {
                             />
                             : null}
                     </div>
-                    {this.renderLineChart(results)}
+                    <div className={'news-feed-bottom-div'}></div>
+                    <div className={'news-feed-line-chart-container'}>
+                        <div>
+                            <p className={'line-chart-votes-label'}>Votes</p>
+                        </div>
+                        {this.renderLineChart(results)}
+                    </div>
+                    <div className={'line-chart-id-div'}>
+                        <p className={'line-chart-id-label'}>ID</p>
+                    </div>
+                    <div className={'news-feed-bottom-div'}></div>
                 </div>
                 <div></div>
             </div>
