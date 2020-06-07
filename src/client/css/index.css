@@ -6,7 +6,7 @@ body{
     width: 100%;
     height: auto;
     display: grid;
-    grid-template-columns: 15% 70% 15%;
+    grid-template-columns: 10% 80% 10%;
 }
 .news-feed-container {
     width: 100%;
