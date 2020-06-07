@@ -113,7 +113,12 @@ class HomeComponent extends React.Component {
 
         for (var i = 0; i < results.length; i++) {
             var id = results[i].id.toString();
-            var votes = results[i].vote_count;
+
+            var storage_item = localStorage.getItem(NEWS_STORAGE_KEY + id);
+            var parse_storage_item = JSON.parse(storage_item);
+            var vote_count = parse_storage_item != null ? parse_storage_item.vote_count : 0;
+
+            var votes = vote_count;
             console.log(id + " == " + votes);
 
             var item = { [id]: votes }
