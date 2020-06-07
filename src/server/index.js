@@ -30,6 +30,7 @@ app.get('*', (req, res) => {
     );
 
     const html = `
+        <!DOCTYPE html>
         <html>
         <head>
             <meta charset="utf-8">

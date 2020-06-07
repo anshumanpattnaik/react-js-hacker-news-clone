@@ -79,23 +79,26 @@ export const setUpVoteCount = vote => dispatch => {
 }
 
 export const hideNewsFeed = (feeds, id) => dispatch => {
+    if(feeds != null) {
+        var parseHide = JSON.parse(JSON.stringify(feeds))
+        if(parseHide !== undefined){
+            var news = parseHide.news
+            let index = news.findIndex(el => el.id === id);
+            var item = news[index];
+            news.splice(index, 1);
 
-    var news = JSON.parse(JSON.stringify(feeds)).news
-    let index = news.findIndex(el => el.id === id);
-    var item = news[index];
-    news.splice(index, 1);
-
-    var hide_results = {
-        "id": item.id,
-        "title": item.title,
-        "author": item.author,
-        "time": item.posted_time,
-        "url": item.url,
-        "vote_count": item.vote_count,
-        "comments": item.comments,
-        "hide": NEWS_FEED_HIDE
+            var hide_results = {
+                "id": item.id,
+                "title": item.title,
+                "author": item.author,
+                "time": item.posted_time,
+                "url": item.url,
+                "vote_count": item.vote_count,
+                "comments": item.comments,
+                "hide": NEWS_FEED_HIDE
+            }
+            localStorage.setItem(NEWS_STORAGE_KEY + id, hide_results)
+            dispatch(dispatchNewsFeeds(news));
+        }
     }
-
-    localStorage.setItem(NEWS_STORAGE_KEY + id, hide_results)
-    dispatch(dispatchNewsFeeds(news));
 }

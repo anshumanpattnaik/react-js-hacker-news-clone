@@ -1,16 +1,16 @@
 body{
+    margin: 0;
     font-family:Verdana, Geneva, sans-serif;
 }
-
 .parent-div-container {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: grid;
     grid-template-columns: 20% 60% 20%;
 }
 .news-feed-container {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
 }
@@ -20,6 +20,12 @@ body{
     justify-content: center;
     background-color: #ff6600;
 }
+.desktop-table {
+    display: block;
+}
+.mobile-table {
+    display: none;
+}
 .header-label {
     font-size: 0.7rem;
     color: white;
@@ -27,6 +33,7 @@ body{
 }
 .td-cloumn-width {
     width: 4.5em;
+    height: 1.5em;
 }
 .td-header-cloumn-width {
     width: 4.8em;
@@ -53,6 +60,13 @@ body{
     font-size: 0.65rem;
     color: #7a7979;
     margin-left: 1em;
+    text-decoration: none;
+}
+.news-url-span:hover {
+    font-size: 0.65rem;
+    color: #7a7979;
+    margin-left: 1em;
+    text-decoration: underline;
 }
 .news-left-bracket {
     font-size: 0.65rem;
@@ -140,4 +154,137 @@ body{
     width: 0.15em;
     height: 1em;
     background-color: #ff6600;
+}
+@media only screen and (max-width: 1000px) {
+    .desktop-table {
+        display: none;
+    }
+    .parent-div-container {
+        width: 100%;
+        height: auto;
+        display: grid;
+        grid-template-columns: 100%;
+    }
+    .mobile-table {
+        display: block;
+    }
+    .td-mobile-header-cloumn-width {
+        width: 4em;
+        height: 1.5em;
+    }
+    .mobile-header-label {
+        font-size: 0.7rem;
+        color: white;
+        font-weight: bold;
+    }
+    .td-mobile-cloumn-width {
+        width: 1.5em;
+    }
+    .mobile-up-arrow-icon {
+        width: 0.5em;
+        height: 0.5em;
+    }
+    .mobile-news-details-span {
+        font-size: 0.8rem;
+        color: black;
+    }
+    .mobile-news-url-span {
+        font-size: 0.6rem;
+        color: #7a7979;
+        margin-left: 1em;
+        text-decoration: none;
+    }
+    .mobile-news-url-span:hover {
+        font-size: 0.6rem;
+        color: #7a7979;
+        margin-left: 1em;
+        text-decoration: underline;
+    }
+    .mobile-news-footer-container {
+        margin-top: 0.2em;
+    }
+    .mobile-news-by-span {
+        font-size: 0.6rem;
+        color: #7a7979;
+    }
+    .mobile-news-author-span {
+        font-size: 0.6rem;
+        color: #000000;
+        margin-left: 1em;
+    }
+    .mobile-news-time-span {
+        font-size: 0.6rem;
+        color: #7a7979;
+        margin-left: 1em;
+    }
+    .mobile-news-hide-label {
+        font-size: 0.6rem;
+        color: #000000;
+        text-decoration: none;
+        margin-left: 0.5em;
+    }
+    .mobile-news-left-bracket {
+        font-size: 0.6rem;
+        color: #7a7979;
+        margin-left: 1em;
+    }
+    .mobile-news-right-bracket {
+        font-size: 0.6rem;
+        color: #7a7979;
+        margin-left: 0.5em;
+    }
+    .mobile-news-comments {
+        font-size: 0.6rem;
+        color: #7a7979;
+        margin-left: 1em;
+    }
+    .pagination-container {
+        width: 100%;
+        height: 2.5em;
+        display: grid;
+        grid-template-columns: 75% 25%;
+    }
+    .pagination-btn-container {
+        width: 90%;
+        height: 2.5em;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .prev-btn-label {
+        font-size: 0.8rem;
+        color: #ff6600;
+        font-weight: bold;
+        margin-right: 0.5em;
+        text-decoration: none;
+    }
+    .next-btn-label {
+        font-size: 0.8rem;
+        color: #ff6600;
+        font-weight: bold;
+        margin-left: 0.5em;
+        text-decoration: none;
+    }
+    .btn-separator-div {
+        width: 0.2em;
+        height: 1em;
+        background-color: #ff6600;
+    }
+    .line-chart-votes-label {
+        font-size: 1rem;
+        color: #000000;
+        font-weight: bold;
+        transform: rotate(-90deg);
+    }
+    .line-chart-id-div {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .line-chart-id-label {
+        font-size: 1rem;
+        color: #000000;
+        font-weight: bold;
+    }
 }

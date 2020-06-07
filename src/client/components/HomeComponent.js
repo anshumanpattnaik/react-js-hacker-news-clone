@@ -88,25 +88,48 @@ class HomeComponent extends React.Component {
 
     renderItem = (item, index) => {
         return (
-            <table width="100%" height="30" border="0" bgcolor={index % 2 == 0 ? '#FFFFFF' : '#F2F2F2'}>
-                <tr>
-                    <td valign="middle" align="center" className={'td-cloumn-width'}><span className={'comments-span'}>{item.comments}</span></td>
-                    <td valign="middle" align="center" className={'td-cloumn-width'}>{this.renderVoteCount(item)}</td>
-                    <td valign="middle" align="center" className={'td-cloumn-width'}>
-                        <a href="#" onClick={this.setUpVoteCount.bind(this, item)}><img src={up_arrow} className={'up-arrow-icon'} /></a>
-                    </td>
-                    <td valign="middle">
-                        <span className={'news-details-span'}>{item.title}</span>
-                        <span className={'news-url-span'}>({this.getDomain(item.url)})</span>
-                        <span className={'news-url-span'}>by</span>
-                        <span className={'news-author-span'}>{item.author}</span>
-                        <span className={'news-time-span'}>{item.time}</span>
-                        <span className={'news-left-bracket'}>[</span>
-                        <a href="#" className={'news-hide-label'} onClick={this.hideNewsFeed.bind(this, item)}>hide</a>
-                        <span className={'news-right-bracket'}>]</span>
-                    </td>
-                </tr>
-            </table>
+            <div>
+                <table width="100%" height="30" border="0" bgcolor={index % 2 == 0 ? '#FFFFFF' : '#F2F2F2'} className={'desktop-table'}>
+                    <tr>
+                        <td valign="middle" align="center" className={'td-header-cloumn-width'}><span className={'comments-span'}>{item.comments}</span></td>
+                        <td valign="middle" align="center" className={'td-cloumn-width'}>{this.renderVoteCount(item)}</td>
+                        <td valign="middle" align="center" className={'td-cloumn-width'}>
+                            <a href="#" onClick={this.setUpVoteCount.bind(this, item)}><img src={up_arrow} className={'up-arrow-icon'} /></a>
+                        </td>
+                        <td valign="middle">
+                            <span className={'news-details-span'}>{item.title}</span>
+                            <a href={item.url} className={'news-url-span'} target="_blank">({this.getDomain(item.url)})</a>
+                            <span className={'news-url-span'}>by</span>
+                            <span className={'news-author-span'}>{item.author}</span>
+                            <span className={'news-time-span'}>{item.time}</span>
+                            <span className={'news-left-bracket'}>[</span>
+                            <a href="#" className={'news-hide-label'} onClick={this.hideNewsFeed.bind(this, item)}>hide</a>
+                            <span className={'news-right-bracket'}>]</span>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%" border="0" bgcolor={index % 2 == 0 ? '#FFFFFF' : '#F2F2F2'} className={'mobile-table'}>
+                    <tr>
+                        <td valign="middle" align="center" className={'td-mobile-cloumn-width'}>{this.renderVoteCount(item)}</td>
+                        <td valign="middle" align="center" className={'td-mobile-cloumn-width'}>
+                            <a href="#" onClick={this.setUpVoteCount.bind(this, item)}><img src={up_arrow} className={'mobile-up-arrow-icon'} /></a>
+                        </td>
+                        <td valign="middle">
+                            <span className={'mobile-news-details-span'}>{item.title}</span>
+                            <a href={item.url} className={'mobile-news-url-span'} target="_blank">({this.getDomain(item.url)})</a>
+                            <div className={'mobile-news-footer-container'}>
+                                <span className={'mobile-news-by-span'}>by</span>
+                                <span className={'mobile-news-author-span'}>{item.author}</span>
+                                <span className={'mobile-news-time-span'}>{item.time}</span>
+                                <span className={'mobile-news-left-bracket'}>[</span>
+                                <a href="#" className={'mobile-news-hide-label'} onClick={this.hideNewsFeed.bind(this, item)}>hide</a>
+                                <span className={'mobile-news-right-bracket'}>]</span>
+                                <span className={'mobile-news-comments'}>{item.comments} comments</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         )
     }
 
@@ -121,7 +144,6 @@ class HomeComponent extends React.Component {
             var vote_count = parse_storage_item != null ? parse_storage_item.vote_count : 0;
 
             var votes = vote_count;
-            console.log(id + " == " + votes);
 
             var item = { [id]: votes }
             statistics.push(item);
@@ -141,26 +163,19 @@ class HomeComponent extends React.Component {
     }
 
     previousPage() {
-
         var endPage = this.state.endPage > 61 ? this.state.endPage - 30 : 31;
         var startPage = this.state.startPage > 31 ? this.state.startPage - 30 : 1;
-
-        console.log('previousPage...'+startPage+" --- "+endPage);
 
         this.setState({
             endPage: endPage,
             startPage: startPage
         })
         this.props.fetchNewsFeed(startPage, endPage);
-
     }
 
     nextPage() {
         var endPage = this.state.endPage + 30;
         var startPage = this.state.startPage + 30;
-
-        console.log('nextPage...' + startPage + " --- " + endPage);
-
 
         this.setState({
             endPage: endPage,
@@ -171,19 +186,24 @@ class HomeComponent extends React.Component {
 
     render() {
         var results = JSON.parse(JSON.stringify(this.props.news)).news;
-        console.log(" News Feeds ---- " + JSON.stringify(this.props.news));
-
         return (
             <div className={'parent-div-container'}>
                 <div></div>
                 <div className={'news-feed-container'}>
                     <div className={'news-feed-header'}>
-                        <table cellPadding="0" cellSpacing="0" width="100%" height="20" border="0">
+                        <table cellPadding="0" cellSpacing="0" width="100%" border="0" className={'desktop-table'}>
                             <tr>
                                 <td valign="middle" align="center" className={'td-header-cloumn-width'}><span className={'header-label'}>Comments</span></td>
                                 <td valign="middle" align="center" className={'td-header-cloumn-width'}><span className={'header-label'}>Vote Count</span></td>
                                 <td valign="middle" align="center" className={'td-header-cloumn-width'}><span className={'header-label'}>UpVote</span></td>
                                 <td valign="middle"><span className={'header-label'}>News Details</span></td>
+                            </tr>
+                        </table>
+                        <table cellPadding="0" cellSpacing="0" width="100%" border="0" className={'mobile-table'}>
+                            <tr>
+                                <td valign="middle" align="center" className={'td-mobile-header-cloumn-width'}><span className={'mobile-header-label'}>Vote Count</span></td>
+                                <td valign="middle" align="center" className={'td-mobile-header-cloumn-width'}><span className={'mobile-header-label'}>UpVote</span></td>
+                                <td valign="middle"><span className={'mobile-header-label'}>News Details</span></td>
                             </tr>
                         </table>
                     </div>
