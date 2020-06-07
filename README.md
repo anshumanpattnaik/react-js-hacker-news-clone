@@ -8,6 +8,10 @@ And the application has been built with [Travis-CI (continuous integration)](htt
 
 <img src="screenshot/thumbnail.png"/>
 
+<p>
+    <img src="screenshot/votes_graph.png"/>
+</p>
+
 ### Website link
 [https://react-hn-clone.herokuapp.com/](https://react-hn-clone.herokuapp.com/)
 
