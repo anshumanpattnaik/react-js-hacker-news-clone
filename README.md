@@ -9,7 +9,7 @@ And the application has been built with [Travis-CI (continuous integration)](htt
 <img src="screenshot/thumbnail.png"/>
 
 <p>
-    <img src="screenshot/votes_graph.png"/>
+    <img src="screenshot/votes_graph.PNG"/>
 </p>
 
 ### Website link
