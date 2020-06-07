@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import FlatList from 'flatlist-react';
 
 import { fetchNewsFeed, setUpVoteCount, hideNewsFeed } from '../actions';
-import { NEWS_STORAGE_KEY, NEWS_FEED_SHOW } from '../actions/constants';
-
-import up_arrow from '../icons/up_arrow.png';
+import { NEWS_STORAGE_KEY, NEWS_FEED_SHOW, UP_ARROW_ICON } from '../actions/constants';
 
 import { LineChart } from 'react-chartkick';
 import 'chart.js'
@@ -94,7 +92,7 @@ class HomeComponent extends React.Component {
                         <td valign="middle" align="center" className={'td-header-cloumn-width'}><span className={'comments-span'}>{item.comments}</span></td>
                         <td valign="middle" align="center" className={'td-cloumn-width'}>{this.renderVoteCount(item)}</td>
                         <td valign="middle" align="center" className={'td-cloumn-width'}>
-                            <a href="#" onClick={this.setUpVoteCount.bind(this, item)}><img src={up_arrow} className={'up-arrow-icon'} /></a>
+                            <a href="#" onClick={this.setUpVoteCount.bind(this, item)}><img src={UP_ARROW_ICON} className={'up-arrow-icon'} /></a>
                         </td>
                         <td valign="middle">
                             <span className={'news-details-span'}>{item.title}</span>
@@ -112,7 +110,7 @@ class HomeComponent extends React.Component {
                     <tr>
                         <td valign="middle" align="center" className={'td-mobile-cloumn-width'}>{this.renderVoteCount(item)}</td>
                         <td valign="middle" align="center" className={'td-mobile-cloumn-width'}>
-                            <a href="#" onClick={this.setUpVoteCount.bind(this, item)}><img src={up_arrow} className={'mobile-up-arrow-icon'} /></a>
+                            <a href="#" onClick={this.setUpVoteCount.bind(this, item)}><img src={UP_ARROW_ICON} className={'mobile-up-arrow-icon'} /></a>
                         </td>
                         <td valign="middle">
                             <span className={'mobile-news-details-span'}>{item.title}</span>
