@@ -1,0 +1,75 @@
+import {
+    BASE_URL,
+    ITMES,
+    FETCH_NEWS_FEED,
+    SET_UPVOTE_COUNT,
+    NEWS_STORAGE_KEY
+} from './constants';
+
+import 'regenerator-runtime/runtime';
+
+export const dispatchNewsFeeds = data => ({
+    type: FETCH_NEWS_FEED,
+    payload: data
+});
+
+export const fetchNewsFeed = counter => async (dispatch) => {
+    
+    var feeds = [];
+    for (var i = 1; i < 31; i++) {
+        await fetch(BASE_URL + ITMES + parseInt(i))
+            .then(response => response.json())
+            .then(data => {
+                var results = JSON.parse(JSON.stringify(data));
+
+                var title = results.title;
+                if (title != null) {
+                    var id = results.id;
+                    var author = results.author;
+                    var url = results.url;
+                    var timeStamp = results.created_at_i;
+                    var vote_count = results.points;
+                    var commentCount = results.children.length;
+
+                    var date = new Date(timeStamp * 1000);
+                    var posted_time = date.getMonth()+"/"+date.getDay()+"/"+date.getFullYear();
+
+                    var storage_item = localStorage.getItem(NEWS_STORAGE_KEY + id);
+                    var parse_storage_item = JSON.parse(storage_item);
+                    var vote_storage_count = parse_storage_item.vote_count;
+
+                    console.log("Get Storage Vote Count --> "+id+" == "+vote_count+" ::: "+vote_storage_count)
+
+                    var news_results = {
+                        "id": id,
+                        "title": title,
+                        "author": author,
+                        "time": posted_time,
+                        "url": url,
+                        "vote_count": vote_storage_count > vote_count? vote_storage_count: vote_count,
+                        "comments": commentCount
+                    }
+
+                    feeds.push(news_results)
+
+                    localStorage.setItem(NEWS_STORAGE_KEY+id, JSON.stringify(news_results));
+        
+                    dispatch(dispatchNewsFeeds(feeds));
+
+                }
+            }).catch(error => {
+                console.log("Error Feed -- " + i + " == " + JSON.stringify(error));
+            })
+    }
+}
+
+export const dispatchVoteCount = count => ({
+    type: SET_UPVOTE_COUNT,
+    payload: count
+});
+
+export const setUpVoteCount = vote => dispatch => {
+    
+    console.log("Vote : setUpVoteCount Redux = " + JSON.stringify(vote));
+    dispatch(dispatchVoteCount(vote));
+}
