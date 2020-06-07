@@ -15,10 +15,12 @@ export const dispatchNewsFeeds = data => ({
     payload: data
 });
 
-export const fetchNewsFeed = counter => async (dispatch) => {
+export const fetchNewsFeed = (start, end) => async (dispatch) => {
+
+    console.log("fetchNewsFeed...." + start+" == "+end);
 
     var feeds = [];
-    for (var i = 1; i < 31; i++) {
+    for (var i = start; i < end; i++) {
         await fetch(BASE_URL + ITMES + parseInt(i))
             .then(response => response.json())
             .then(data => {

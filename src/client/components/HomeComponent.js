@@ -16,12 +16,14 @@ class HomeComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            newsFeeds: []
+            newsFeeds: [],
+            startPage: 1,
+            endPage: 31
         }
     }
 
     componentDidMount() {
-        this.props.fetchNewsFeed(1);
+        this.props.fetchNewsFeed(this.state.startPage, this.state.endPage);
     }
 
     getDomain(url) {
@@ -100,7 +102,7 @@ class HomeComponent extends React.Component {
                         <span className={'news-author-span'}>{item.author}</span>
                         <span className={'news-time-span'}>{item.time}</span>
                         <span className={'news-left-bracket'}>[</span>
-                        <a href="#" onClick={this.hideNewsFeed.bind(this, item)}><span className={'news-hide-label'}>hide</span></a>
+                        <a href="#" className={'news-hide-label'} onClick={this.hideNewsFeed.bind(this, item)}>hide</a>
                         <span className={'news-right-bracket'}>]</span>
                     </td>
                 </tr>
@@ -126,8 +128,8 @@ class HomeComponent extends React.Component {
         }
         var graph_item = JSON.stringify(statistics);
         graph_item = graph_item.replace(/[{}]/g, "");
-        graph_item = graph_item.replace('[','{');
-        graph_item = graph_item.replace(']','}');
+        graph_item = graph_item.replace('[', '{');
+        graph_item = graph_item.replace(']', '}');
 
         var data = JSON.parse(graph_item);
 
@@ -138,10 +140,39 @@ class HomeComponent extends React.Component {
         )
     }
 
+    previousPage() {
+
+        var endPage = this.state.endPage > 61 ? this.state.endPage - 30 : 31;
+        var startPage = this.state.startPage > 31 ? this.state.startPage - 30 : 1;
+
+        console.log('previousPage...'+startPage+" --- "+endPage);
+
+        this.setState({
+            endPage: endPage,
+            startPage: startPage
+        })
+        this.props.fetchNewsFeed(startPage, endPage);
+
+    }
+
+    nextPage() {
+        var endPage = this.state.endPage + 30;
+        var startPage = this.state.startPage + 30;
+
+        console.log('nextPage...' + startPage + " --- " + endPage);
+
+
+        this.setState({
+            endPage: endPage,
+            startPage: startPage
+        })
+        this.props.fetchNewsFeed(startPage, endPage);
+    }
+
     render() {
         var results = JSON.parse(JSON.stringify(this.props.news)).news;
         console.log(" News Feeds ---- " + JSON.stringify(this.props.news));
-        
+
         return (
             <div className={'parent-div-container'}>
                 <div></div>
@@ -167,6 +198,14 @@ class HomeComponent extends React.Component {
                             />
                             : null}
                     </div>
+                    <div className={'pagination-container'}>
+                        <div></div>
+                        <div className={'pagination-btn-container'}>
+                            <a href="#" className={'prev-btn-label'} onClick={this.previousPage.bind(this)}>Previous</a>
+                            <div className={'btn-separator-div'}></div>
+                            <a href="#" className={'next-btn-label'} onClick={this.nextPage.bind(this)}>Next</a>
+                        </div>
+                    </div>
                     <div className={'news-feed-bottom-div'}></div>
                     <div className={'news-feed-line-chart-container'}>
                         <div>
@@ -191,7 +230,7 @@ const stateProps = state => ({
 });
 
 const dispatchProps = dispatch => ({
-    fetchNewsFeed: counter => dispatch(fetchNewsFeed(counter)),
+    fetchNewsFeed: (start, end) => dispatch(fetchNewsFeed(start, end)),
     setUpVoteCount: item => dispatch(setUpVoteCount(item)),
     hideNewsFeed: (feeds, id) => dispatch(hideNewsFeed(feeds, id))
 });
