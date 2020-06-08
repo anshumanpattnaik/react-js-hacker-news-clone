@@ -1,4 +1,4 @@
-![GitHub last commit](https://img.shields.io/github/last-commit/anshumanpattnaik/react-js-hacker-news-clone) [![Build Status](https://travis-ci.com/anshumanpattnaik/react-js-hacker-news-clone.svg?token=SNk9QbPWYh7aHsuu4BXB&branch=master)](https://travis-ci.com/anshumanpattnaik/react-js-hacker-news-clone) ![GitHub deployments](https://react-hn-clone.herokuapp.com/)
+![GitHub last commit](https://img.shields.io/github/last-commit/anshumanpattnaik/react-js-hacker-news-clone) [![Build Status](https://travis-ci.com/anshumanpattnaik/react-js-hacker-news-clone.svg?token=SNk9QbPWYh7aHsuu4BXB&branch=master)](https://travis-ci.com/anshumanpattnaik/react-js-hacker-news-clone)
 
 ## Technical Overview
 
