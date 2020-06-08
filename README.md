@@ -1,10 +1,10 @@
-## Technical Overview
+![GitHub last commit](https://img.shields.io/github/last-commit/anshumanpattnaik/react-js-hacker-news-clone) [![Build Status](https://travis-ci.com/anshumanpattnaik/react-js-hacker-news-clone.svg?token=SNk9QbPWYh7aHsuu4BXB&branch=master)](https://travis-ci.com/anshumanpattnaik/react-js-hacker-news-clone) ![GitHub deployments](https://img.shields.io/github/deployments/anshumanpattnaik/react-js-hacker-news-clone/react-hn-clone) ![GitHub followers](https://img.shields.io/github/followers/anshumanpattnaik?style=social)
 
-[![Build Status](https://travis-ci.com/anshumanpattnaik/react-js-hacker-news-clone.svg?token=SNk9QbPWYh7aHsuu4BXB&branch=master)](https://travis-ci.com/anshumanpattnaik/react-js-hacker-news-clone)
+## Technical Overview
 
 The idea behind this project is to design the clone of hacker news website using react.js with Server-side rendering technique and the application modules bundled using [Webpack](https://webpack.js.org/) Javascript module bundler and it uses [babel-loader](https://webpack.js.org/loaders/babel-loader/) to load the plugins with the given presets. 
 
-To populate the votes in a line chart, it uses [react-chartkick](https://www.npmjs.com/package/react-chartkick) npm modules.
+To populate the votes in a line chart, it uses ![npm](https://img.shields.io/npm/v/react-chartkick?label=react-chartkick) npm modules.
 
 And the application has been built with [Travis-CI (continuous integration)](https://travis-ci.com/) and deployed to [Heroku](https://react-hn-clone.herokuapp.com/).
 
